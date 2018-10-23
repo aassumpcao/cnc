@@ -106,7 +106,7 @@ parse_pessoa_um <- function(arq) {
     rvest::html_nodes(xpath = '//table[@width="700px" and @align="center"]//tr[not(@style="display: none;")]') %>% {
       x <- .
       i <- x %>% rvest::html_text() %>%
-        stringr::str_detect("INFORMA(.)?(.)?ES SOBRE A CONDENA(.)?(.)?O") %>%
+        stringr::str_detect("INFORMAÇÕES SOBRE A CONDENAÇÃO") %>%
         which()
       x[(1+i):length(x)]
     } %>%
