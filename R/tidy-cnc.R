@@ -47,8 +47,7 @@ tidy_processos <- function(cnc_processos) {
     group_by(arq, key) %>%
     summarise(value = paste(value, collapse = '\n')) %>%
     ungroup() %>%
-    spread(key, value) %>%
-    setNames(c('arq', 'subsecao', names(.)[-c(1,2)]))
+    spread(key, value)
   cnc_processos_tidy <- cnc_processos_spr %>%
     unite(secao, secao_judiciaria, subsecao, sep = '\n') %>%
     mutate(secao = if_else(secao == 'NA\nNA', NA_character_, secao)) %>%
@@ -119,8 +118,8 @@ tidy_condenacoes <- function(cnc_condenacoes, cnc_pags, cnc_processos) {
     summarise(value = paste(value, collapse = '\n')) %>%
     ungroup() %>%
     spread(key, value) %>%
-    mutate_all(funs(suppressWarnings(convert_to_NA(., c('', 'NA'))))) %>%
-    remove_empty_cols()
+    mutate_all(funs(suppressWarnings(janitor::convert_to_NA(., c('', 'NA'))))) %>%
+    janitor::remove_empty('cols')
 
   aux_pags <- cnc_pags %>%
     tidy_pags() %>%
