@@ -133,7 +133,7 @@ cnc_pessoas_infos <- function(d_pessoas, path = 'data-raw/pessoas_infos') {
     dplyr::filter(stringr::str_detect(value, 'recuperarDados')) %>%
     with(gsub('[^0-9]', '', value))
   l <- 'http://www.cnj.jus.br/improbidade_adm/visualizar_condenacao.php?seq_condenacao=1&rs=getDadosParte&rst=&rsrnd=0&rsargs[]=%s'
-  l <- sprintf(l, id_pessoa)
+  l <- sprintf(l, id_pessoa) %>% unique()
   tibble::data_frame(id = id_pessoa, link = l) %>%
     dplyr::group_by(id, link) %>%
     dplyr::do({
